@@ -5,6 +5,7 @@ import axios from "axios";
 const formSchema = yup.object().shape({
     name: yup.string().required("Name is a required field"),
     email: yup.string().email().required("An Email is required"),
+    role: yup.string(),
     password: yup.string().required("A password is required"),
     terms: yup.boolean().oneOf([true], "Please agree to the terms of service")
 });
@@ -13,11 +14,13 @@ export default function Form() {
     const [formState, setFormState] = useState({
         name: "",
         email: "",
+        role: "",
         password: ""
     });
     const [errors, setErrors] = useState({
         name: "",
         email: "",
+        role: "",
         password: ""
     });
     const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -50,7 +53,7 @@ export default function Form() {
     const formSubmit = e => {
         e.preventDefault();
         axios
-            .user("https://reqres.in/api/users_", formState)
+            .post("https://reqres.in/api/users", formState)
             .then(response => {
                 setUser(response.data);
                 console.log("YEET", user);
@@ -58,6 +61,7 @@ export default function Form() {
                 setFormState({
                     name: "",
                     email: "",
+                    role: "",
                     password: ""
                 });
             })
@@ -82,7 +86,7 @@ export default function Form() {
 
 
     return (
-        <form>
+        <form onSubmit={formSubmit}>
             <label htmlFor="name">
                 Name
                 <input
@@ -107,6 +111,17 @@ export default function Form() {
                 />
                 {errors.email.length > 0 ? 
                 <p classname="error">{errors.email}</p> : null}
+            </label>
+            <br></br>
+            <label htmlFor="role">
+                Role 
+                <select id="role" name="role" onChange={inputChange}>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Human Resources">Human Resources</option>
+                    <option value="Chief Meme Officer">Chief Meme Officer</option>
+                    <option value="Corporate Snack Delivery Boi">Corporate Snack Delivery Boi</option>
+                    <option value="Useless Heathen">Useless Heathen</option>
+                </select>
             </label>
             <br></br>
             <label htmlFor="password">
