@@ -104,7 +104,7 @@ export default function Form() {
                 Email
                 <input
                     id="email"
-                    type="text"
+                    type="email"
                     name="email"
                     value={formState.email}
                     onChange={inputChange}
@@ -128,7 +128,7 @@ export default function Form() {
                 Password
                 <input
                     id="password"
-                    type="text"
+                    type="password"
                     name="password"
                     value={formState.password}
                     onChange={inputChange}

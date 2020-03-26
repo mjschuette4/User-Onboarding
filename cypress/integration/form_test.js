@@ -25,4 +25,12 @@ describe("test our inputs and submit our form", () => {
 
         cy  .get("button").click();
     })
+    it('check validation message on invalid input', () => {
+        cy.get('input[name="email"]')
+            .type('not_an_email')
+        cy.get('.error')
+            .should('be_visable')
+        cy.get('button')
+            .should('be_disabled')
+      })
 })
